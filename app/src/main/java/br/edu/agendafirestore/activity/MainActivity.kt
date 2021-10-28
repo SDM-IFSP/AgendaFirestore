@@ -56,6 +56,16 @@ class MainActivity : AppCompatActivity() {
                startActivity(intent)
             }
 
+            override fun onImageClick(pos: Int) {
+                var fav:Boolean?=contatoAdapter.snapshots
+                    .getSnapshot(pos).getBoolean("favorito")
+
+                if (fav==null) fav =false
+
+                db.collection("contatos").document(contatoAdapter.snapshots
+                    .getSnapshot(pos).id).update("favorito", if (fav) false else true)
+            }
+
         }
 
         contatoAdapter.clickListener = clickListener
